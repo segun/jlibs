@@ -1,0 +1,141 @@
+<project default="compile" basedir=".">
+<description>HashQL Client/Server Interface</description>
+
+
+<property file="build.properties"/>
+<property file="${user.homedir}/build.properties"/>
+
+<path id="jar.libs">
+	<fileset dir="${lib.dir}">
+		<include name="*.jar"/>
+	</fileset>
+</path>
+
+<path id="compile.classpath">
+	<fileset dir="${lib.dir}">
+		<include name="*.jar" />
+	</fileset>
+</path>
+
+<path id="test.classpath">
+	<pathelement location="${test.dir}"/>
+	<pathelement location="${build.classes}"/>
+</path>
+
+<path id="run.classpath">
+	<path refid="compile.classpath"/>
+	<pathelement location="${dist.dir}/${project.name}.jar"/>
+</path>
+
+<target name="settings">
+	<echo message="project.name = ${project.name}"/>
+	<echo message="project.version = ${project.version}"/>
+	<echo message=""/>
+	<echo message="src.dir = ${src.dir}"/>
+	<echo message="lib.dir = ${lib.dir}"/>
+	<echo message="build.dir = ${build.dir}"/>
+	<echo message="dist.dir = ${dist.dir}"/>
+	<echo message="test.dir = ${test.dir}"/>
+	<echo message="config.dir = ${config.dir}"/>
+</target>
+
+
+<target name="init-project">
+	<mkdir dir="${document.root}"/>
+	<mkdir dir="${document.root.webinf}"/>
+	<mkdir dir="${src.dir}"/>
+	<mkdir dir="${lib.dir}"/>
+	<mkdir dir="${test.dir}"/>
+	<mkdir dir="${config.dir}"/>
+</target>
+
+<target name="clean">
+	<delete dir="${build.dir}"/>
+</target>
+
+
+<target name="testclean">
+<delete>
+	<fileset dir="${test.dir}">
+		<include name="*.class"/>
+	</fileset>
+</delete>
+</target>
+
+
+<target name="distclean">
+	<delete dir="${dist.dir}"/>
+</target>
+
+
+<target name="resources">
+	<mkdir dir="${build.classes}"/>
+	<copy todir="${build.classes}" includeEmptyDirs="no">
+		<fileset dir="${src.dir}">
+			<include name="*.properties"/>
+			<include name="*.conf"/>
+			<include name="*.xml"/>
+		</fileset>
+	</copy>
+</target>
+
+
+<target name="compile">
+	<mkdir dir="${build.classes}"/>
+	<javac srcdir="${src.dir}" destdir="${build.classes}">
+		<classpath refid="compile.classpath"/>
+	</javac>
+</target>
+
+
+<target name="compiletest" depends="compile">
+	<mkdir dir="${test.dir}"/>
+	<javac srcdir="${test.dir}" destdir="${test.dir}" includeAntRuntime="true" debug="true">
+		<classpath refid="compile.classpath"/>
+		<classpath refid="test.classpath"/>
+	</javac>
+</target>
+
+
+<target name="test" depends="compiletest">
+	<junit printsummary="false" haltonfailure="no" showoutput="yes" filtertrace="yes">
+		<classpath refid="compile.classpath"/>
+		<classpath refid="test.classpath"/>
+		<batchtest fork="yes">
+			<formatter type="brief" usefile="false"/>
+			<fileset dir="${test.dir}" includes="**/Test*.class"/>
+		</batchtest>
+	</junit>
+</target>
+
+<manifestclasspath property="manifest.jarlist" jarfile=".">
+	<classpath refid="jar.libs" />
+</manifestclasspath>
+
+<target name="dist" depends="resources, compile">
+	<mkdir dir="${dist.lib}"/>
+	<copy todir="${dist.lib}">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+	</copy>
+
+	<mkdir dir="${dist.dir}"/>
+	<jar destfile="${dist.dir}/${project.name}.jar" basedir="${build.classes}">
+		<manifest>
+			<attribute name="Built-By" value="${project.author}"/>
+			<attribute name="Sealed" value="true"/>
+			<attribute name="Main-Class" value="${main.class}"/>
+			<attribute name="Class-Path" value="${manifest.jarlist}"/>
+		</manifest>
+	</jar>
+</target>
+
+<target name="run" depends="dist">
+	<java classname="com.trinisoft.hashquel.HashQuelServer" classpathref="run.classpath"/>
+</target>
+
+<target name="all" depends="clean, distclean, dist"/>
+<target name="allclean" depends="clean, testclean, distclean"/>
+
+</project>

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo cp dist/*.jar /usr/java/latest/jre/lib/ext/
+cd $HOME/src/HashQuel 
