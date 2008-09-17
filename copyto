@@ -1,4 +1,3 @@
 #!/bin/bash
 
-sudo cp dist/*.jar /usr/java/latest/jre/lib/ext/
-cd $HOME/src/HashQuel 
+sudo cp dist/*.jar $JAVA_HOME/jre/lib/ext/

@@ -31,4 +31,5 @@ public abstract class DBClass {
     public abstract boolean insert(Object tableReflector, String tableName) throws Exception;
     public abstract boolean update(Object tableReflector, String tableName, String where) throws Exception;
     public abstract ArrayList executeQuery(String queryString, int exepectedCols) throws Exception;
+    public abstract void executeQuery(String queryString) throws Exception;
 }

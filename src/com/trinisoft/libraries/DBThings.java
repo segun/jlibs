@@ -203,6 +203,15 @@ public class DBThings extends DBClass {
         return retVal;
     }
 
+	 public void executeQuery(String query) throws Exception {
+		 try {
+			 System.out.printf("Query : %s\n", query);
+			 st.execute(query);
+		 } catch(Exception e) {
+			 e.printStackTrace();
+		 }
+	 }
+
     private String getAutoFid(String table, String fidName) throws Exception {
         String query = "select max(" + fidName + ") from " + table;
         resultSet = st.executeQuery(query);
