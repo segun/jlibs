@@ -80,7 +80,7 @@ public class TestDBThings extends TestCase {
         String where = "where indy = '23'";
         things.update(word,"word_table",where);
     }    
-    
+/**    
     public void testExecuteQuery() throws Exception {
 		 DBThings things = new DBThings("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/hashql", "hashql", "hashql");
 		 String q = "select distinct dbname from hashql_databases";
@@ -101,5 +101,5 @@ public class TestDBThings extends TestCase {
 		 String q = "insert into hashql_databases(dbname, userid) values('m','4')";
 		 things.executeQuery(q);
 		 assertTrue(true);
-	 }
+	 }*/
 }
