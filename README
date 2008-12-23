@@ -9,4 +9,5 @@ run ant all
 run ./copyto
 run ant test
 
+To run test, the default username and password are root and mysql respectively
 Enjoy.
