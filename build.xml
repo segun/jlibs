@@ -138,20 +138,7 @@
 	<java classname="com.trinisoft.hashquel.HashQuelServer" classpathref="run.classpath"/>
 </target>
 
-<target name="docs" depends="compile">
-	<javadoc
-		access="private"
-		destdir="${doc.dir}"
-		packagenames="com.trinisoft.hashquel.*"
-		sourcepath="src"
-		use="true"
-		version="true"
-		windowtitle="${project.name}"
-		failonerror="true">
-	</javadoc>
-</target>
-
-<target name="all" depends="clean, distclean, dist, docs"/>
+<target name="all" depends="clean, distclean, dist"/>
 <target name="allclean" depends="clean, testclean, distclean, docsclean"/>
 
 </project>
