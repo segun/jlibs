@@ -19,7 +19,7 @@ public class PropertyHelper {
             try {
                 is = getClass().getClassLoader().getResourceAsStream(path);
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
 
             if (is == null) {
@@ -27,7 +27,7 @@ public class PropertyHelper {
                 try {
                     is = new FileInputStream(new File(".\\" + path));
                 } catch (FileNotFoundException fne) {
-                    fne.printStackTrace();
+                    System.out.println(fne.getMessage());
                 }
             }
 
@@ -36,9 +36,18 @@ public class PropertyHelper {
                 try {
                     is = new FileInputStream(new File(path));
                 } catch (FileNotFoundException fne) {
-                    fne.printStackTrace();
+                    System.out.println(fne.getMessage());
                 }
             }
+            if(is == null) {
+                System.out.println("trying to load from user home directory");
+                try {
+                    is = new FileInputStream(new File(System.getProperty("user.home") + File.pathSeparator + path));
+                } catch(FileNotFoundException fnfe) {
+                    System.out.println(fnfe.getMessage());
+                }
+            }
+            
             if (is == null) {
                 return properties;
             } else {
