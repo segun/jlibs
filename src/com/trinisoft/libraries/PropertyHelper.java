@@ -6,48 +6,53 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PropertyHelper {
 
+    static final Logger logger = Logger.getLogger(PropertyHelper.class.getName());
+    
     public Properties getProperties(String path) throws IOException {
         InputStream is = null;
         if (path == null) {
             return new Properties();
         } else {
             Properties properties = new Properties();
-            System.out.println("trying to load from jar file");
+            logger.log(Level.INFO, "trying to load from current dir");
             try {
-                is = getClass().getClassLoader().getResourceAsStream(path);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+                is = new FileInputStream(new File(".\\" + path));
+            } catch (FileNotFoundException fne) {
+                logger.log(Level.SEVERE, "", fne.getMessage());
             }
 
             if (is == null) {
-                System.out.println("trying to load from current dir");
-                try {
-                    is = new FileInputStream(new File(".\\" + path));
-                } catch (FileNotFoundException fne) {
-                    System.out.println(fne.getMessage());
-                }
-            }
-
-            if (is == null) {
-                System.out.println("trying to load from path as specified");
+                logger.log(Level.INFO, "trying to load from path as specified");
                 try {
                     is = new FileInputStream(new File(path));
                 } catch (FileNotFoundException fne) {
-                    System.out.println(fne.getMessage());
+                    logger.log(Level.SEVERE, "", fne.getMessage());
                 }
             }
-            if(is == null) {
-                System.out.println("trying to load from user home directory");
+
+            if (is == null) {
+                logger.log(Level.INFO, "trying to load from user home directory");
                 try {
                     is = new FileInputStream(new File(System.getProperty("user.home") + File.pathSeparator + path));
-                } catch(FileNotFoundException fnfe) {
-                    System.out.println(fnfe.getMessage());
+                } catch (FileNotFoundException fnfe) {
+                    logger.log(Level.SEVERE, "", fnfe.getMessage());
                 }
             }
             
+            if (is == null) {
+                logger.log(Level.INFO, "trying to load from jar file");
+                try {
+                    is = getClass().getClassLoader().getResourceAsStream(path);
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, "", e.getMessage());
+                }               
+            }
+
             if (is == null) {
                 return properties;
             } else {
