@@ -1,0 +1,13 @@
+These Classes here are pretty and straight forward. A careful inspection of their methods should tell you what they do.
+
+The test is a good place to check how these things are used in their simplest form
+
+To run tests, please run the SQL scripts in SQL/ first
+
+To start copy all the jars in lib to $JAVA_HOME/jre/lib/ext
+run ant all
+run ./copyto
+run ant test
+
+To run test, the default username and password are root and mysql respectively
+Enjoy.
