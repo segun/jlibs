@@ -53,6 +53,14 @@ public class PropertyHelper {
                 }               
             }
 
+            if(is == null) {
+                logger.log(Level.INFO, "trying to load from /etc");
+                try {
+                    is = new FileInputStream(new File("/etc/" + path));
+                } catch(FileNotFoundException fnfe) {
+                    fnfe.getStackTrace();
+                }
+            }
             if (is == null) {
                 return properties;
             } else {
