@@ -22,7 +22,7 @@ import java.util.logging.StreamHandler;
  */
 public class LoggingUtils {
 /**
- * 
+ *
  * @param fileName
  * @param parent if this is null, then the log file is put in current_directory/logs
  * @param className if this is null, then we return an anonymous logger
@@ -37,7 +37,7 @@ public class LoggingUtils {
         }
 
         fileName += ".log";
-        
+
         File file = null;
         if(parent == null) {
             file = new File("logs", fileName);
@@ -55,7 +55,7 @@ public class LoggingUtils {
     }
 
     /**
-     * 
+     *
      * @param className if this is null, then we return an anonymous logger
      * @return
      */
