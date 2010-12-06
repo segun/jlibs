@@ -3,6 +3,7 @@ package com.trinisoft.libraries;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -11,7 +12,7 @@ import java.util.logging.Logger;
 
 public class PropertyHelper {
 
-    static final Logger logger = Logger.getLogger(PropertyHelper.class.getName());
+    static final Logger logger = Logger.getLogger(PropertyHelper.class.getName());   
     
     public Properties getProperties(String path) throws IOException {
         InputStream is = null;
@@ -38,7 +39,7 @@ public class PropertyHelper {
             if (is == null) {
                 logger.log(Level.INFO, "trying to load from user home directory");
                 try {
-                    is = new FileInputStream(new File(System.getProperty("user.home") + File.pathSeparator + path));
+                    is = new FileInputStream(new File(System.getProperty("user.home") + File.separatorChar + path));
                 } catch (FileNotFoundException fnfe) {
                     logger.log(Level.SEVERE, "", fnfe.getMessage());
                 }
