@@ -10,3 +10,4 @@ ClientFace/build
 *.swo
 *.class
 *.html
+.DS_Store
