@@ -11,8 +11,8 @@ import java.util.logging.Logger;
 
 public class PropertyHelper {
 
-    static final Logger logger = Logger.getLogger(PropertyHelper.class.getName());   
-    
+    static final Logger logger = Logger.getLogger(PropertyHelper.class.getName());
+
     public Properties getProperties(String path) throws IOException {
         InputStream is = null;
         if (path == null) {
@@ -43,14 +43,14 @@ public class PropertyHelper {
                     logger.log(Level.SEVERE, "", fnfe.getMessage());
                 }
             }
-            
+
             if (is == null) {
                 logger.log(Level.INFO, "trying to load from jar file");
                 try {
                     is = getClass().getClassLoader().getResourceAsStream(path);
                 } catch (Exception e) {
                     logger.log(Level.SEVERE, "", e.getMessage());
-                }               
+                }
             }
 
             if(is == null) {
