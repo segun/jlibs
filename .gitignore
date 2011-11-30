@@ -11,4 +11,3 @@ ClientFace/build
 *.class
 *.html
 .DS_Store
-/nbproject/private/
